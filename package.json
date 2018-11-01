@@ -1,0 +1,26 @@
+{
+  "name": "progress-list",
+  "author": "Ray Zane",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "types": "lib/types.d.ts",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rzane/progress-list.git"
+  },
+  "scripts": {
+    "test": "ts-node example.ts",
+    "prepublishOnly": "tsc -p ."
+  },
+  "dependencies": {
+    "@types/log-update": "^2.0.0",
+    "chalk": "^2.4.1",
+    "log-update": "^2.3.0"
+  },
+  "devDependencies": {
+    "ts-node": "^7.0.1",
+    "tslib": "^1.9.3",
+    "typescript": "^3.1.3"
+  }
+}
