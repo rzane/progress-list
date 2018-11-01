@@ -12,7 +12,7 @@ interface Task {
   failed?: boolean;
 }
 
-export class Progress {
+export class SpinnerList {
   private tasks: Map<string, Task>;
   private interval: NodeJS.Timeout;
 

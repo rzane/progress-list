@@ -1,38 +1,38 @@
-import { Progress } from "./src";
+import { SpinnerList } from "./src";
 
 const delay = (n: number) => {
   return new Promise(resolve => setTimeout(resolve, n));
 };
 
 const run = async () => {
-  const progress = new Progress();
+  const tasks = new SpinnerList();
 
-  progress.start("build:web", "build", "web");
-  progress.start("build:nginx", "build", "nginx");
-  progress.start("build:assets", "build", "assets");
+  tasks.start("build:web", "build", "web");
+  tasks.start("build:nginx", "build", "nginx");
+  tasks.start("build:assets", "build", "assets");
 
   await delay(2404);
-  progress.success("build:nginx");
+  tasks.success("build:nginx");
 
   await delay(429);
-  progress.success("build:assets");
+  tasks.success("build:assets");
 
   await delay(944);
-  progress.success("build:web");
+  tasks.success("build:web");
 
-  progress.start("push:web", "push", "web");
-  progress.start("push:nginx", "push", "nginx");
-  progress.start("push:assets", "push", "assets");
+  tasks.start("push:web", "push", "web");
+  tasks.start("push:nginx", "push", "nginx");
+  tasks.start("push:assets", "push", "assets");
 
   await delay(999);
-  progress.success("push:assets");
+  tasks.success("push:assets");
 
   await delay(2456);
-  progress.failure("push:web");
-  progress.failure("push:nginx");
+  tasks.failure("push:web");
+  tasks.failure("push:nginx");
 
   await delay(300);
-  progress.done();
+  tasks.done();
 };
 
 run().catch(err => {
