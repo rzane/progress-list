@@ -10,7 +10,12 @@ export interface RenderContext {
 
 export type RenderFunction = (context: RenderContext) => string;
 
-export const renderMany = ({ label, frame, runtime, finishedAt }: RenderContext) => {
+export const renderMany = ({
+  label,
+  frame,
+  runtime,
+  finishedAt
+}: RenderContext) => {
   if (!finishedAt) {
     return chalk` {blue ${frame}} ${label}`;
   }
@@ -18,7 +23,12 @@ export const renderMany = ({ label, frame, runtime, finishedAt }: RenderContext)
   return chalk`   ${label} {gray (${runtime.toFixed(2)}s)}`;
 };
 
-export const renderOne = ({ label, frame, runtime, finishedAt }: RenderContext) => {
+export const renderOne = ({
+  label,
+  frame,
+  runtime,
+  finishedAt
+}: RenderContext) => {
   if (!finishedAt) {
     return chalk`${label} {blue ${frame}}`;
   }

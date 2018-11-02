@@ -3,18 +3,18 @@ import { Spinner } from "./spinner";
 describe("Spinner", () => {
   test("rotate", () => {
     const spinner = new Spinner("Hi");
-    expect(spinner['frame']).toEqual(0);
+    expect(spinner["frame"]).toEqual(0);
 
     spinner.rotate();
-    expect(spinner['frame']).toEqual(1);
+    expect(spinner["frame"]).toEqual(1);
   });
 
-  test("finish", () => {
+  test("stop", () => {
     const spinner = new Spinner("Hi");
-    expect(spinner['finishedAt']).toBeUndefined();
+    expect(spinner["finishedAt"]).toBeUndefined();
 
-    spinner.finish();
-    expect(spinner['finishedAt']).toEqual(expect.any(Number));
+    spinner.stop();
+    expect(spinner["finishedAt"]).toEqual(expect.any(Number));
   });
 
   test("toString", () => {
@@ -23,5 +23,10 @@ describe("Spinner", () => {
 
     spinner.rotate();
     expect(spinner.toString()).toMatchInlineSnapshot(`" [34m⠙[39m Hi"`);
+  });
+
+  test("toString with custom renderer", () => {
+    const spinner = new Spinner("Hi", context => context.label);
+    expect(spinner.toString()).toEqual("Hi");
   });
 });
