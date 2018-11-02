@@ -17,8 +17,14 @@ export class Spinner {
     this.label = label;
   }
 
+  public setColor(color: string) {
+    this.color = color;
+    return this;
+  }
+
   public setLabel(label: string) {
     this.label = label;
+    return this;
   }
 
   public finish() {

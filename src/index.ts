@@ -1,53 +1,29 @@
-import chalk from "chalk";
 import * as logUpdate from "log-update";
+import { Spinner } from "./spinner";
 
-const FRAMES = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
-
-interface Task {
-  action: string;
-  label: string;
-  frame: number;
-  startedAt: number;
-  took?: number;
-  failed?: boolean;
-}
+export { Spinner };
 
 export class SpinnerList {
-  private tasks: Map<string, Task>;
+  private spinners: Map<string, Spinner>;
   private interval: NodeJS.Timeout;
 
   public constructor() {
-    this.tasks = new Map();
-    this.interval = setInterval(this.render, 80);
+    this.spinners = new Map();
+    this.interval = setInterval(() => this.render(), 80);
   }
 
-  public start(id: string, action: string, label: string) {
-    this.tasks.set(id, {
-      action,
-      label,
-      frame: 0,
-      failed: false,
-      startedAt: Date.now()
-    });
+  public set(id: string, spinner: Spinner) {
+    this.spinners.set(id, spinner);
   }
 
-  public success(id: string) {
-    const now = Date.now();
-    const task = this.tasks.get(id);
+  public get(id: string) {
+    const spinner = this.spinners.get(id);
 
-    if (task) {
-      task.took = (now - task.startedAt) / 1000;
+    if (!spinner) {
+      throw new Error(`Spinner does not exist: ${id}`);
     }
-  }
 
-  public failure(id: string) {
-    const now = Date.now();
-    const task = this.tasks.get(id);
-
-    if (task) {
-      task.took = (now - task.startedAt) / 1000;
-      task.failed = true;
-    }
+    return spinner;
   }
 
   public done() {
@@ -56,30 +32,17 @@ export class SpinnerList {
     logUpdate.done();
   }
 
-  private render = () => {
-    const tasks = Array.from(this.tasks.values());
-    const message = tasks.map(this.renderTask).join("\n");
-    logUpdate(`\n${message}`);
+  public toString() {
+    const spinners = Array.from(this.spinners.values());
+    const messages = spinners.map(spinner => spinner.toString());
+    return `\n${messages.join("\n")}`;
+  }
 
-    for (const task of tasks) {
-      task.frame = ++task.frame % FRAMES.length;
+  public render() {
+    logUpdate(this.toString());
+
+    for (const spinner of this.spinners.values()) {
+      spinner.rotate();
     }
-  };
-
-  private renderTask = ({
-    action,
-    label,
-    frame,
-    failed,
-    took = 0
-  }: Task): string => {
-    const state = failed ? "red" : took ? "green" : "blue";
-    const seconds = took.toFixed(2);
-
-    if (!took) {
-      return chalk` {${state} ${FRAMES[frame]} ${action}:} ${label}`;
-    }
-
-    return chalk`   {${state} ${action}:} ${label} {gray (${seconds}s)}`;
-  };
+  }
 }
