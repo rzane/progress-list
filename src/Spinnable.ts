@@ -4,7 +4,7 @@ export abstract class Spinnable {
   private interval?: NodeJS.Timer;
 
   public abstract toString(): string;
-  public abstract rotate(): void;
+  public abstract rotate(): this;
 
   public start() {
     if (!this.interval) {

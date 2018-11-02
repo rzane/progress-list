@@ -8,10 +8,11 @@ const getRuntime = (startedAt: number, finishedAt: number = Date.now()) => {
 };
 
 export class Spinner extends Spinnable {
-  private label: string;
+  public label: string;
+  public startedAt: number = Date.now();
+  public finishedAt?: number;
+
   private frame: number = 0;
-  private startedAt: number = Date.now();
-  private finishedAt?: number;
   private renderer: RenderFunction;
 
   public static start(label: string, renderer: RenderFunction = renderOne) {
@@ -36,12 +37,12 @@ export class Spinner extends Spinnable {
 
   public stop() {
     this.finishedAt = Date.now();
-    super.stop();
-    return this;
+    return super.stop();
   }
 
   public rotate() {
     this.frame = ++this.frame % FRAMES.length;
+    return this;
   }
 
   public toString() {
