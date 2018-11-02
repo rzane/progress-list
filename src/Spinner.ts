@@ -19,7 +19,7 @@ export class Spinner extends Spinnable {
   private frame: number = 0;
   private renderer: RenderFunction;
 
-  public static start(label: string, options?: SpinnerOptions) {
+  public static start(label: string, options?: SpinnerOptions): Spinner {
     return new Spinner(label, options).spin();
   }
 
@@ -29,24 +29,24 @@ export class Spinner extends Spinnable {
     this.renderer = render;
   }
 
-  public setLabel(label: string) {
+  public setLabel(label: string): this {
     this.label = label;
     return this;
   }
 
-  public finish(label?: string) {
+  public finish(label?: string): this {
     this.finishedAt = Date.now();
     this.label = label ? label : this.label;
     this.stopSpinning();
     return this;
   }
 
-  public rotate() {
+  public rotate(): this {
     this.frame = ++this.frame % FRAMES.length;
     return this;
   }
 
-  public toString() {
+  public toString(): string {
     return this.renderer({
       label: this.label,
       frame: FRAMES[this.frame],
