@@ -2,12 +2,10 @@ import { Spinner } from "./Spinner";
 import { Spinnable } from "./Spinnable";
 
 export class SpinnerList extends Spinnable {
-  private spinners: Map<string, Spinner>;
+  private spinners: Map<string, Spinner> = new Map();
 
-  public constructor() {
-    super();
-    this.spinners = new Map();
-    this.spin();
+  public static start() {
+    return new SpinnerList().start();
   }
 
   public set(id: string, spinner: Spinner) {
@@ -27,12 +25,14 @@ export class SpinnerList extends Spinnable {
   public toString() {
     const spinners = Array.from(this.spinners.values());
     const messages = spinners.map(spinner => spinner.toString());
-    return `\n${messages.join("\n")}`;
+    return messages.join("\n");
   }
 
   public rotate() {
     for (const spinner of this.spinners.values()) {
       spinner.rotate();
     }
+
+    return this;
   }
 }
