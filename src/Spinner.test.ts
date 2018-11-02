@@ -44,13 +44,6 @@ describe("Spinner", () => {
     expect(spinner.toString()).toEqual("Hi");
   });
 
-  test("renderWith", () => {
-    const spinner = new Spinner("Hi");
-    const result = spinner.renderWith(_context => "Changed!");
-    expect(result).toEqual(spinner);
-    expect(spinner.toString()).toEqual("Changed!");
-  });
-
   test("setLabel", () => {
     const spinner = new Spinner("Hello");
     expect(spinner.setLabel("Goodbye")).toEqual(spinner);

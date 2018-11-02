@@ -1,14 +1,20 @@
-import { Spinner } from "./Spinner";
+import { Spinner, SpinnerOptions } from "./Spinner";
 import { Spinnable } from "./Spinnable";
+import { renderMany } from "./render";
 
 export class SpinnerList extends Spinnable {
   private spinners: Map<string, Spinner> = new Map();
 
   public static start() {
-    return new SpinnerList().start();
+    return new SpinnerList().spin();
   }
 
-  public set(id: string, spinner: Spinner) {
+  public set(id: string, label: string, options: SpinnerOptions = {}) {
+    const spinner = new Spinner(label, {
+      render: renderMany,
+      ...options
+    });
+
     this.spinners.set(id, spinner);
   }
 
@@ -20,6 +26,11 @@ export class SpinnerList extends Spinnable {
     }
 
     return spinner;
+  }
+
+  public finish() {
+    this.stopSpinning();
+    return this;
   }
 
   public toString() {

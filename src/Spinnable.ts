@@ -6,7 +6,7 @@ export abstract class Spinnable {
   public abstract toString(): string;
   public abstract rotate(): this;
 
-  public start() {
+  public spin() {
     if (!this.interval) {
       this.interval = setInterval(() => this.render(), 80);
     }
@@ -14,7 +14,7 @@ export abstract class Spinnable {
     return this;
   }
 
-  public stop() {
+  public stopSpinning() {
     if (this.interval) {
       clearInterval(this.interval);
       this.render();

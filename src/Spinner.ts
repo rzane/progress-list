@@ -1,11 +1,15 @@
 import { Spinnable } from "./Spinnable";
-import { RenderFunction, renderMany, renderOne } from "./render";
+import { RenderFunction, renderOne } from "./render";
 
 const FRAMES = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
 
 const getRuntime = (startedAt: number, finishedAt: number = Date.now()) => {
   return (finishedAt - startedAt) / 1000;
 };
+
+export interface SpinnerOptions {
+  render?: RenderFunction;
+}
 
 export class Spinner extends Spinnable {
   public label: string;
@@ -15,14 +19,14 @@ export class Spinner extends Spinnable {
   private frame: number = 0;
   private renderer: RenderFunction;
 
-  public static start(label: string, renderer: RenderFunction = renderOne) {
-    return new Spinner(label, renderer).start();
+  public static start(label: string, options?: SpinnerOptions) {
+    return new Spinner(label, options).spin();
   }
 
-  public constructor(label: string, renderer: RenderFunction = renderMany) {
+  public constructor(label: string, { render = renderOne }: SpinnerOptions = {}) {
     super();
     this.label = label;
-    this.renderer = renderer;
+    this.renderer = render;
   }
 
   public setLabel(label: string) {
@@ -30,14 +34,11 @@ export class Spinner extends Spinnable {
     return this;
   }
 
-  public renderWith(renderer: RenderFunction) {
-    this.renderer = renderer;
-    return this;
-  }
-
-  public stop() {
+  public finish(label?: string) {
     this.finishedAt = Date.now();
-    return super.stop();
+    this.label = label ? label : this.label;
+    this.stopSpinning();
+    return this;
   }
 
   public rotate() {
