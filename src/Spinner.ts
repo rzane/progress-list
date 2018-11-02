@@ -1,36 +1,36 @@
-import chalk from "chalk";
 import { Spinnable } from "./Spinnable";
+import { RenderFunction, renderMany, renderOne } from "./render";
 
 const FRAMES = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
 
-const formatDuration = (startedAt: number, finishedAt: number) => {
-  return ((finishedAt - startedAt) / 1000).toFixed(2);
+const getRuntime = (startedAt: number, finishedAt: number = Date.now()) => {
+  return (finishedAt - startedAt) / 1000;
 };
 
 export class Spinner extends Spinnable {
   private label: string;
-  private color: string;
   private frame: number = 0;
   private startedAt: number = Date.now();
   private finishedAt?: number;
+  private renderer: RenderFunction;
 
-  public static start(label: string) {
-    return new Spinner(label).start();
+  public static start(label: string, renderer: RenderFunction = renderOne) {
+    return new Spinner(label, renderer).start();
   }
 
-  public constructor(label: string, color: string = "blue") {
+  public constructor(label: string, renderer: RenderFunction = renderMany) {
     super();
     this.label = label;
-    this.color = color;
-  }
-
-  public setColor(color: string) {
-    this.color = color;
-    return this;
+    this.renderer = renderer;
   }
 
   public setLabel(label: string) {
     this.label = label;
+    return this;
+  }
+
+  public renderWith(renderer: RenderFunction) {
+    this.renderer = renderer;
     return this;
   }
 
@@ -45,11 +45,12 @@ export class Spinner extends Spinnable {
   }
 
   public toString() {
-    if (!this.finishedAt) {
-      return chalk` {${this.color} ${FRAMES[this.frame]}} ${this.label}`;
-    }
-
-    const duration = formatDuration(this.startedAt, this.finishedAt);
-    return chalk`   ${this.label} {gray (${duration}s)}`;
+    return this.renderer({
+      label: this.label,
+      frame: FRAMES[this.frame],
+      startedAt: this.startedAt,
+      finishedAt: this.finishedAt,
+      runtime: getRuntime(this.startedAt, this.finishedAt)
+    });
   }
 }
