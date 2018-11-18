@@ -1,5 +1,5 @@
-import { Spinner } from "./Spinner";
-import { SpinnerList } from "./SpinnerList";
+import { Spinner } from "../src/Spinner";
+import { SpinnerList } from "../src/SpinnerList";
 
 describe("SpinnerList", () => {
   test("set", () => {

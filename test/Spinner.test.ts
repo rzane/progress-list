@@ -1,4 +1,4 @@
-import { Spinner } from "./spinner";
+import { Spinner } from "../src/spinner";
 
 describe("Spinner", () => {
   test("rotate", () => {
