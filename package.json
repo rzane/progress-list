@@ -3,7 +3,7 @@
   "author": "Ray Zane",
   "version": "2.0.0",
   "main": "lib/index.js",
-  "types": "lib/types.d.ts",
+  "types": "lib/index.d.ts",
   "license": "MIT",
   "repository": {
     "type": "git",
