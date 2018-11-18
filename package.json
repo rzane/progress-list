@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "license": "MIT",
+  "files": ["lib"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rzane/spinner-list.git"
@@ -16,7 +17,7 @@
     "test": "jest",
     "example": "ts-node example.ts",
     "format": "prettier --write 'src/**/*.ts' 'example.ts'",
-    "prepublishOnly": "tsc -p ."
+    "prepack": "tsc -p ."
   },
   "dependencies": {
     "@types/log-update": "^2.0.0",
