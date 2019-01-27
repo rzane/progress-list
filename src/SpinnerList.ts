@@ -37,7 +37,7 @@ export class SpinnerList extends Spinnable {
   public toString(): string {
     const spinners = Array.from(this.spinners.values());
     const messages = spinners.map(spinner => spinner.toString());
-    return messages.join("\n");
+    return `\n${messages.join("\n")}\n`;
   }
 
   public rotate(): this {

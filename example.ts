@@ -6,12 +6,12 @@ const delay = (n: number) => {
 };
 
 const run = async () => {
-  console.log("===>> Spinner\n");
+  console.log("===>> Spinner");
   const spinner = Spinner.start("Loading...");
   await delay(2489);
   spinner.finish();
 
-  console.log("\n===>> SpinnerList\n");
+  console.log("===>> SpinnerList");
   const tasks = SpinnerList.start();
 
   tasks.set("build:web", chalk`{blue build:} web`);
@@ -40,8 +40,6 @@ const run = async () => {
 
   await delay(300);
   tasks.finish();
-
-  console.log();
 };
 
 run().catch(err => {

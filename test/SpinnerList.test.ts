@@ -22,9 +22,11 @@ describe("SpinnerList", () => {
     spinner.set("two", "Two").finish();
     spinner.set("three", "Three");
     expect(spinner.toString()).toMatchInlineSnapshot(`
-" [34m⠋[39m One
+"
+ [34m⠋[39m One
    Two [90m(0.00s)[39m
- [34m⠋[39m Three"
+ [34m⠋[39m Three
+"
 `);
   });
 
@@ -39,8 +41,10 @@ describe("SpinnerList", () => {
     });
 
     expect(spinner.toString()).toMatchInlineSnapshot(`
-"One
-0"
+"
+One
+0.001
+"
 `);
   });
 });
