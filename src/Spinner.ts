@@ -23,7 +23,10 @@ export class Spinner extends Spinnable {
     return new Spinner(label, options).spin();
   }
 
-  public constructor(label: string, { render = renderOne }: SpinnerOptions = {}) {
+  public constructor(
+    label: string,
+    { render = renderOne }: SpinnerOptions = {}
+  ) {
     super();
     this.label = label;
     this.renderer = render;
